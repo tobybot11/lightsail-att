@@ -1,0 +1,10 @@
+
+  310  apt-cache search qemu
+  311  apt -y install qemu
+  312  apt -y install qemu-kvm
+  313  apt -y install libvirt-bin
+  314  adduser root libvirtd
+  315  cat /etc/group
+  316  apt install virtinst
+  324  wget http://releases.ubuntu.com/16.04/ubuntu-16.04-server-i386.iso
+  325  virt-install --name one --ram 256 --disk path=/var/lib/libvirt/images/one,bus=virtio,size=4  -c ubuntu-16.04-server-i386.iso --network network=default,model=virtio --graphics vnc,listen=0.0.0.0 --noautoconsole -v 

@@ -1,0 +1,22 @@
+    2  apt update
+    4  apt upgrade
+    5  apt -y install bridge-utils
+   10  echo "network: {config: disabled}" > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+   12  cd /etc/network/interfaces.d/
+   14  vi 90_br0.cfg
+   18  vi 50-cloud-init.cfg 
+   20  cat 50-cloud-init.cfg 
+   25  reboot
+   29  brctl addbr gre-br0
+   30  ip addr add 172.16.0.12/24 dev gre-br0
+   32  ip link set gre-br0 up
+   35  ip link add gretap-181 type gretap local 172.26.7.56 remote 172.26.7.181
+   36  ip link set dev gretap-181 up
+   37  brctl addif gre-br0 gretap-181
+   38  ip link add gretap-141 type gretap local 172.26.7.56 remote 172.26.13.141
+   39  ip link set dev gretap-141 up
+   40  brctl addif gre-br0 gretap-141
+   41  brctl show
+   42  apt install iperf
+   44  iperf -c 172.16.0.11 
+   45  iperf -p gre-br0 -c 172.16.0.11
